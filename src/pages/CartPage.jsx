@@ -13,6 +13,10 @@ function CartPage() {
     fetchUserInfo();
   }, []);
 
+  useEffect(() => {
+    console.log('장바구니 데이터:', cartItems);
+  }, [cartItems]);
+
   const fetchUserInfo = async () => {
     try {
       const response = await fetch('http://localhost:5000/auth/user-info', {
@@ -27,7 +31,7 @@ function CartPage() {
       const data = await response.json();
       setUserId(data.userId);
       setUserName(data.userName);
-      loadCart(data.userId); // 사용자 ID를 전달하여 장바구니 로드
+      loadCart(data.userId);
     } catch (error) {
       console.error('사용자 정보 조회 오류:', error.message);
     }
@@ -46,7 +50,7 @@ function CartPage() {
         }
 
         const data = await response.json();
-        setCartItems(data.cartItems || []); // 응답에서 cartItems를 설정합니다.
+        setCartItems(data.cartItems || []);
       } catch (error) {
         console.error('장바구니 조회 오류:', error.message);
       }
@@ -57,7 +61,6 @@ function CartPage() {
 
   const clearCart = async () => {
     try {
-      // 서버에 장바구니 비우기 요청 추가 (필요 시)
       const response = await fetch(`http://localhost:5000/cart/clear?userId=${userId}`, {
         method: 'POST',
         credentials: 'include',
@@ -67,33 +70,29 @@ function CartPage() {
         throw new Error('장바구니 비우기 실패');
       }
 
-      // 상태 업데이트
       setCartItems([]);
     } catch (error) {
       console.error('장바구니 비우기 오류:', error.message);
     }
   };
 
-  const removeItemFromCart = async (productId) => {
+  const removeItemFromCart = async (cartId) => {
     try {
-      // 서버에서 아이템 삭제 요청 (필요 시)
-      const response = await fetch(
-        `http://localhost:5000/cart/remove?productId=${productId}&userId=${userId}`,
-        {
-          method: 'DELETE',
-          credentials: 'include',
-        },
-      );
+      const response = await fetch(`http://localhost:5000/cart/remove?cartId=${cartId}`, {
+        method: 'DELETE',
+        credentials: 'include',
+      });
 
       if (!response.ok) {
-        throw new Error('장바구니에서 아이템 삭제 실패');
+        throw new Error('아이템 삭제 오류: 장바구니에서 아이템 삭제 실패');
       }
 
-      // 상태 업데이트
-      const updatedCart = cartItems.filter((item) => item.productId !== productId);
-      setCartItems(updatedCart);
+      const data = await response.json();
+      console.log(data.message); // 성공 메시지 출력
+      // 삭제 후 장바구니 재로드
+      loadCart(userId);
     } catch (error) {
-      console.error('아이템 삭제 오류:', error.message);
+      console.error(error.message);
     }
   };
 
@@ -117,31 +116,27 @@ function CartPage() {
             <th>총가격</th>
             <th>삭제</th>
             <th>장바구니 ID</th>
+            <th>상품 ID</th>
           </tr>
         </thead>
-
         <tbody id='cartTable-sku' className='cart-bundle-list'>
           {cartItems.length > 0 ? (
             cartItems.map((item) => (
               <tr key={item.cartId} className='cart-deal-item'>
-                <td className='product-box'>{item.name}</td>
-                <td className='option-price-part'>{item.price}원</td>
+                <td className='product-box'>{item.name || '상품명 없음'}</td>
+                <td className='option-price-part'>{item.price || 0}원</td>
                 <td>{item.quantity}</td>
-                <td>{item.price * item.quantity}원</td>
+                <td>{(item.price || 0) * item.quantity}원</td>
                 <td>
-                  <button
-                    className='remove-item-btn'
-                    onClick={() => removeItemFromCart(item.productId)}
-                  >
-                    삭제
-                  </button>
+                  <button onClick={() => removeItemFromCart(item.cartId)}>삭제</button>
                 </td>
                 <td>{item.cartId}</td>
+                <td>{item.productId}</td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan='6'>장바구니가 비어 있습니다.</td>
+              <td colSpan='7'>장바구니가 비어 있습니다.</td>
             </tr>
           )}
         </tbody>

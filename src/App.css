@@ -10,7 +10,7 @@
   text-align: center;
   @apply p-4 bg-yellow-50;
   min-height: 100vh; /* 화면 전체 크기 */
-  
+
   display: flex;
   flex-direction: column;
   padding-top: 100px; /* TopBar의 높이에 맞춰 여백 추가 */
@@ -133,15 +133,14 @@ button {
   width: 80px;
   font-size: 0.4rem;
   height: 25px;
-  
+
   font-weight: bold;
   transition: all 0.3s ease;
 }
 
-
 .button-container {
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 5px; /* 🔹 버튼 사이 간격 조정 */
@@ -287,8 +286,6 @@ button:active {
   left: 0;
 }
 
-
-
 .cart-popup {
   position: absolute; /* 상대 위치 설정 */
   top: 100%; /* 버튼 아래에 위치 */
@@ -302,7 +299,6 @@ button:active {
   font-size: 12px; /* 폰트 크기 조정 */
   font-family: Arial, sans-serif; /* 원하는 폰트로 변경 */
 }
-
 
 .MypageBt {
   position: relative; /* button의 슬라이드 효과를 위한 relative 설정 */
@@ -365,13 +361,11 @@ button:active {
   cursor: pointer;
 }
 
-.user-info-container{
-
+.user-info-container {
   width: 50px;
   height: 50px;
   margin-bottom: 0px; /* 🔹 버튼과의 간격 최소화 */
   text-overflow: ellipsis; /* 텍스트가 넘칠 경우 "..." 표시 */
-
 }
 
 .welcome-message {
@@ -402,7 +396,7 @@ button:active {
   z-index: 800;
   overflow: visible; /* 서브메뉴가 잘리지 않도록 설정 */
   overflow-y: auto; /* 세로 스크롤 활성화 */
- /* max-height: calc(100vh - 160px); /* 화면 높이에서 TopBar 크기 제외 */
+  /* max-height: calc(100vh - 160px); /* 화면 높이에서 TopBar 크기 제외 */
   scroll-behavior: smooth; /* 부드러운 스크롤 */
 }
 
@@ -486,7 +480,6 @@ button:active {
   left: 20px;
   background: transparent; /* 투명 배경으로 변경 */
 
- 
   padding: 10px;
   border-radius: 50%;
   font-size: 24px;

@@ -1,10 +1,9 @@
 ---
 name: Bug Template
 about: 수정해야 할 버그 이슈
-title: "[BUG]"
+title: '[BUG]'
 labels: ''
 assignees: ''
-
 ---
 
 <!-- 해당 템플릿은 백엔드에서도 재사용 가능한 공용 템플릿으로 만들어짐 -->

@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import "../../App.css"; // 경로 확인 필수!
+import { useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import '../../App.css'; // 경로 확인 필수!
 
 function Top() {
   const [userId, setUserId] = useState(null);
@@ -13,35 +13,54 @@ function Top() {
 
   useEffect(() => {
     fetchUserInfo();
-    loadCart(); // 장바구니 불러오기
   }, []);
 
+  // 사용자 정보를 가져오는 함수
   const fetchUserInfo = async () => {
     try {
-      const response = await fetch("http://localhost:5000/auth/user-info", {
-        method: "GET",
-        credentials: "include",
+      const response = await fetch('http://localhost:5000/auth/user-info', {
+        method: 'GET',
+        credentials: 'include',
       });
 
       if (!response.ok) {
-        throw new Error("로그인 정보 조회 실패");
+        throw new Error('로그인 정보 조회 실패');
       }
 
       const data = await response.json();
-      console.log("응답 상태:", response.status);
-      console.log("사용자 정보:", data);
+      console.log('응답 상태:', response.status);
+      console.log('사용자 정보:', data);
 
       setUserId(data.userId);
       setUserName(data.userName);
+
+      // 사용자 정보를 가져온 후 장바구니 불러오기
+      loadCart(data.userId);
     } catch (error) {
-      console.error("사용자 정보 조회 오류:", error.message);
+      console.error('사용자 정보 조회 오류:', error.message);
     }
   };
 
-  const loadCart = () => {
-    const storedCart = localStorage.getItem("cart");
-    if (storedCart) {
-      setCartItems(JSON.parse(storedCart));
+  // 장바구니를 불러오는 함수
+  const loadCart = async (userId) => {
+    try {
+      const response = await fetch(`http://localhost:5000/cart?userId=${userId}`, {
+        method: 'GET',
+        credentials: 'include',
+      });
+
+      if (!response.ok) {
+        throw new Error('장바구니 불러오기 실패');
+      }
+
+      const data = await response.json();
+      console.log('장바구니 데이터:', data);
+
+      if (data.cartItems) {
+        setCartItems(data.cartItems);
+      }
+    } catch (error) {
+      console.error('장바구니 불러오기 오류:', error.message);
     }
   };
 
@@ -66,6 +85,7 @@ function Top() {
     });
     setUserId(null);
     setUserName(null);
+    setCartItems([]); // 로그아웃 시 장바구니 초기화
     navigate('/');
   };
 
@@ -94,7 +114,7 @@ function Top() {
       <ul>
         {cartItems.map((item, index) => (
           <li key={index}>
-            {item.name} - {item.price}원 (수량: {item.quantity})
+            상품명:{item.name} / {item.price}원 (수량: {item.quantity}),({item.cartid})
           </li>
         ))}
       </ul>
@@ -109,22 +129,23 @@ function Top() {
         <input
           type='text'
           className='search-input'
-          placeholder=''
+          placeholder='검색어를 입력하세요.'
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <button type='submit' className='search-button'>🔍</button>
+        <button type='submit' className='search-button'>
+          🔍
+        </button>
       </form>
-
       {/* 유저 정보 및 버튼 그룹 */}
-      <div className="user-info-container">
+      <div className='user-info-container'>
         {userId && userName && (
-          <p className="welcome-message">
-            {userName}님,  <span>유저 ID: {userId}</span>
+          <p className='welcome-message'>
+            {userName}님, <span>유저 ID: {userId}</span>
           </p>
         )}
       </div>
-      <div className="button-container">
+      <div className='button-container'>
         {userId ? (
           <>
             <button className='TopSigninBt' onClick={handleLogoutClick}>
@@ -142,11 +163,7 @@ function Top() {
               장바구니
             </button>
             {/* 장바구니 팝업 */}
-            {showCartPopup && (
-              <div className="cart-popup">
-                {getCartItemList()}
-              </div>
-            )}
+            {showCartPopup && <div className='cart-popup'>{getCartItemList()}</div>}
           </>
         ) : (
           <button className='TopSigninBt' onClick={handleSignInClick}>

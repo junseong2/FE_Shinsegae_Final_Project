@@ -1,74 +1,76 @@
 .cart-container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-  }
-  
-  .cart-title {
-    font-size: 24px;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  .user-info, .login-prompt {
-    text-align: center;
-    margin: 10px 0;
-    font-size: 16px;
-  }
-  
-  .cartTable {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-  }
-  
-  .cartTable th,
-  .cartTable td {
-    padding: 12px;
-    border: 1px solid #ddd;
-    text-align: center;
-  }
-  
-  .cartTable th {
-    background-color: #f2f2f2;
-  }
-  
-  .cart-deal-item {
-    background-color: #fff;
-  }
-  
-  .clear-cart-btn, .back-btn, .remove-item-btn {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .clear-cart-btn {
-    background-color: #ff6666;
-    color: white;
-    margin-right: 10px;
-  }
-  
-  .back-btn {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .remove-item-btn {
-    background-color: #e7e7e7;
-  }
-  
-  .cart-actions {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-.remove-item-btn  {
-    background-color: white;
-    border: 3px solid black;
-  }
-  
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.cart-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.user-info,
+.login-prompt {
+  text-align: center;
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.cartTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.cartTable th,
+.cartTable td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.cartTable th {
+  background-color: #f2f2f2;
+}
+
+.cart-deal-item {
+  background-color: #fff;
+}
+
+.clear-cart-btn,
+.back-btn,
+.remove-item-btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.clear-cart-btn {
+  background-color: #ff6666;
+  color: white;
+  margin-right: 10px;
+}
+
+.back-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.remove-item-btn {
+  background-color: #e7e7e7;
+}
+
+.cart-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.remove-item-btn {
+  background-color: white;
+  border: 3px solid black;
+}
